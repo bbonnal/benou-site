@@ -31,6 +31,6 @@ jobs:
           password: ${{ secrets.OVH_FTP_PASSWORD }}
           protocol: ftp                 
           port: 21                       
-          local-dir: public/             
+          local-dir: public/*             
           server-dir: /home/benousf/docs/ 
           log-level: verbose
