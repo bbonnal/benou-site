@@ -1,0 +1,362 @@
+:root {
+    --bg: #222222;
+    --bk: #000000;
+    --gy: #666666;
+
+    --r: #F57F6C;
+    --rl: #FCB5AA;
+    --g: #52B87A;
+    --gl: #91D4A8;
+    --y: #D99530;
+    --yl: #E9BE74;
+    --b: #498DD1;
+    --bl: #7FB6ED;
+    --m: #F88AAF;
+    --ml: #FCACC5;
+    --c: #32C5D2;
+    --cl: #5EDEE3;
+    --w: #FFFFFF;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    line-height: 1.6;
+    background-color: var(--bg);
+    color: rgba(255, 255, 255, 0.65);
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    padding: 5rem;
+}
+
+/* Header */
+header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #666666;
+}
+
+header h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+header h1 a {
+    color: var(--r);
+    text-decoration: none;
+}
+
+header h1 a:hover {
+    color: var(--rl);
+}
+
+.subtitle {
+    color: #666666;
+    font-size: 0.9rem;
+}
+
+/* Search */
+.search-container {
+    margin-bottom: 2rem;
+}
+
+.search-wrapper {
+    display: flex;
+    align-items: center;
+    background-color: var(--bg);
+    border: 1px solid var(--gy);
+    border-radius: 2px;
+    padding: 0.5rem 0.75rem;
+}
+
+.prompt {
+    color: var(--cyan);
+    margin-right: 0.5rem;
+    font-weight: 500;
+}
+
+#search-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.65);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    outline: none;
+}
+
+#search-input::placeholder {
+    color: #666666;
+}
+
+.search-results {
+    margin-top: 1rem;
+}
+
+.search-result {
+    background-color: #2a2a2a;
+    border: 1px solid #666666;
+    border-radius: 2px;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    transition: border-color 0.2s;
+}
+
+.search-result:hover {
+    border-color: var(--cl);
+}
+
+.search-result a {
+    color: rgba(255, 255, 255, 0.65);
+    text-decoration: none;
+    display: block;
+}
+
+.search-result h3 {
+    color: var(--g);
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+}
+
+.search-result .snippet {
+    color: #666666;
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+}
+
+.search-result mark {
+    background-color: rgba(173, 149, 233, 0.16);
+    color: var(--g);
+}
+
+/* Docs List */
+.docs-list h2 {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.doc-item {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #666666;
+}
+
+.doc-item:last-child {
+    border-bottom: none;
+}
+
+.doc-item a {
+    color: rgba(255, 255, 255, 0.65);
+    text-decoration: none;
+    display: block;
+}
+
+.doc-item h3 {
+    color: var(--g);
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+    font-weight: 500;
+}
+
+.doc-item a:hover h3 {
+    color: var(--gl);
+}
+
+.meta {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    font-size: 0.85rem;
+    color: #666666;
+}
+
+.tags {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.tag {
+    color: var(--bl);
+}
+
+/* Single Doc */
+.doc-single {
+    max-width: 800px;
+}
+
+.doc-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #666666;
+}
+
+.doc-header h1 {
+    color: var(--g);
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.doc-content {
+    margin-bottom: 2rem;
+}
+
+.doc-content h2 {
+    color: var(--c);
+    font-size: 1.2rem;
+    margin: 1.5rem 0 1rem 0;
+    font-weight: 500;
+}
+
+.doc-content h3 {
+    color: var(--yl);
+    font-size: 1rem;
+    margin: 1rem 0 0.5rem 0;
+    font-weight: 500;
+}
+
+.doc-content p {
+    margin-bottom: 1rem;
+}
+
+.doc-content ul,
+.doc-content ol {
+    margin-left: 2rem;
+    margin-bottom: 1rem;
+}
+
+.doc-content li {
+    margin-bottom: 0.25rem;
+}
+
+.doc-content code {
+    background-color: none;
+    color: var(--w);
+    padding: 0.15rem 0.4rem;
+    border-radius: 2px;
+    font-size: 0.9em;
+}
+
+.doc-content pre {
+    background-color: none;
+    border: 1px solid #666666;
+    border-radius: 2px;
+    padding: 1rem;
+    overflow-x: auto;
+    margin-bottom: 1rem;
+}
+
+.doc-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.doc-content a {
+    color: var(--c);
+    text-decoration: underline;
+}
+
+.doc-content a:hover {
+    color: var(--cl);
+}
+
+.doc-footer {
+    padding-top: 1rem;
+    border-top: 1px solid #666666;
+}
+
+.back-link {
+    color: #666666;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.back-link:hover {
+    color: var(--cl);
+}
+
+.highlight {
+    background-color: transparent;
+    border: 1px solid #666666;
+    border-radius: 2px;
+    padding: 1.0rem;  /* Reduced from 1rem */
+    overflow-x: auto;
+    margin-bottom: 1rem;
+}
+
+.highlight pre {
+    background: none !important;
+    background-color: transparent;
+    padding: 0;  /* Changed from none */
+    margin: 0;   /* Changed from none */
+    border: 0;   /* Changed from none */
+}
+
+.highlight .c { color: #666666; } /* Comment */
+.highlight .k { color: var(--r); } /* Keyword */
+.highlight .s { color: var(--g); } /* String */
+.highlight .n { color: var(--b); } /* Name */
+.highlight .o { color: var(--c); } /* Operator */
+
+
+/* Graphics */
+.doc-content img.centered-svg {
+    display: block;
+    margin: 0 auto;
+}
+
+
+/* Footer */
+footer {
+    margin-top: 3rem;
+    padding-top: 1rem;
+    border-top: 1px solid #666666;
+    color: #666666;
+    font-size: 0.85rem;
+}
+
+kbd {
+    background-color: #2a2a2a;
+    border: 1px solid #666666;
+    border-radius: 2px;
+    padding: 0.1rem 0.4rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85em;
+}
+
+/* Selection */
+::selection {
+    background-color: rgba(173, 149, 233, 0.16);
+    color: var(--g);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #333333;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #666666;
+}
