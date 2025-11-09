@@ -37,3 +37,4 @@ jobs:
           remote_path: /home/benousf/docs/
           delete_remote_files: true
           sftp_only: true
+          rsyncArgs: --mkpath
