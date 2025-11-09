@@ -27,11 +27,12 @@ jobs:
         run: hugo --minify
 
       - name: Deploy via SFTP
-        uses: appleboy/scp-action@v1
+        uses: philippheuer/sftp-deploy@v4.2
         with:
           host: ftp.cluster130.hosting.ovh.net
           username: ${{ secrets.OVH_FTP_USER }}
           password: ${{ secrets.OVH_FTP_PASSWORD }}
           port: 22
-          source: "public/*"
-          target: "/docs"
+          localPath: public/
+          remotePath: /docs/
+          cleanRemote: true
