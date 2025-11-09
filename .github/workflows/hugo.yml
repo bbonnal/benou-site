@@ -32,8 +32,8 @@ jobs:
           server: ftp.cluster130.hosting.ovh.net
           username: ${{ secrets.OVH_FTP_USER }}
           password: ${{ secrets.OVH_FTP_PASSWORD }}
-          local-dir: public
-          server-dir: /docs
+          local-dir: public/
+          server-dir: /docs/
           protocol: ftps
           dry-run: true
           log-level: verbose
