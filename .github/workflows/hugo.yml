@@ -35,4 +35,5 @@ jobs:
           local-dir: public
           server-dir: /docs
           protocol: ftps
-          dry-run: false
+          dry-run: true
+          log-level: verbose
