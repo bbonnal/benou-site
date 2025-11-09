@@ -26,6 +26,24 @@ jobs:
       - name: Build Hugo site
         run: hugo --minify
 
+      - name: Ensure remote directories exist recursively
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ftp.cluster130.hosting.ovh.net
+          username: ${{ secrets.OVH_FTP_USER }}
+          password: ${{ secrets.OVH_FTP_PASSWORD }}
+          port: 22
+          script: |
+            set -euo pipefail
+            BASE="/home/benousf/docs"
+            cd public
+            find . -type d -print0 | while IFS= read -r -d '' dir; do
+              [ "$dir" = "." ] && continue
+              remote_dir="$BASE/${dir#./}"
+              echo "mkdir -p $remote_dir"
+              mkdir -p "$remote_dir"
+            done
+
       - name: Deploy via SFTP
         uses: wlixcc/SFTP-Deploy-Action@v1.2.6
         with:
@@ -37,4 +55,3 @@ jobs:
           remote_path: /home/benousf/docs/
           delete_remote_files: true
           sftp_only: true
-          rsyncArgs: --mkpath
