@@ -1,22 +1,76 @@
 {{ define "main" }}
 <div class="docs-list">
-    <h2>Recent Docs</h2>
-    {{ range first 20 (where .Site.RegularPages "Section" "docs") }}
-    <article class="doc-item">
-        <a href="{{ .Permalink }}">
-            <h3>{{ .Title }}</h3>
-            <div class="meta">
-                <time>{{ .Date.Format "2006-01-02" }}</time>
-                {{ if .Params.tags }}
-                <span class="tags">
-                    {{ range .Params.tags }}
-                    <span class="tag">#{{ . }}</span>
+    <div class="docs-header">
+        <button class="filter-btn active" data-filter="recent">Recent Docs</button>
+        <span class="filter-separator">/</span>
+        <button class="filter-btn" data-filter="all">All Docs</button>
+    </div>
+    
+    <div id="recent-docs" class="docs-section">
+        {{ range first 20 (where .Site.RegularPages "Section" "docs") }}
+        <article class="doc-item">
+            <a href="{{ .Permalink }}">
+                <h3>{{ .Title }}</h3>
+                <div class="meta">
+                    <time>{{ .Date.Format "2006-01-02" }}</time>
+                    {{ if .Params.tags }}
+                    <span class="tags">
+                        {{ range .Params.tags }}
+                        <span class="tag">#{{ . }}</span>
+                        {{ end }}
+                    </span>
                     {{ end }}
-                </span>
-                {{ end }}
-            </div>
-        </a>
-    </article>
-    {{ end }}
+                </div>
+            </a>
+        </article>
+        {{ end }}
+    </div>
+
+    <div id="all-docs" class="docs-section" style="display: none;">
+        {{ range (where .Site.RegularPages "Section" "docs") }}
+        <article class="doc-item">
+            <a href="{{ .Permalink }}">
+                <h3>{{ .Title }}</h3>
+                <div class="meta">
+                    <time>{{ .Date.Format "2006-01-02" }}</time>
+                    {{ if .Params.tags }}
+                    <span class="tags">
+                        {{ range .Params.tags }}
+                        <span class="tag">#{{ . }}</span>
+                        {{ end }}
+                    </span>
+                    {{ end }}
+                </div>
+            </a>
+        </article>
+        {{ end }}
+    </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const recentDocs = document.getElementById('recent-docs');
+    const allDocs = document.getElementById('all-docs');
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const filter = this.getAttribute('data-filter');
+            
+            // Update active state
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Toggle sections
+            if (filter === 'recent') {
+                recentDocs.style.display = 'block';
+                allDocs.style.display = 'none';
+            } else {
+                recentDocs.style.display = 'none';
+                allDocs.style.display = 'block';
+            }
+        });
+    });
+});
+</script>
 {{ end }}

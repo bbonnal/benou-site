@@ -1,21 +1,23 @@
 :root {
-    --bg: #222222;
-    --bk: #000000;
-    --gy: #666666;
+    --background: #222222;
+    --background-light: #2a2a2a;
+    --black: #000000;
+    --grey: #666666;
+    --grey-dark: #333333;
 
-    --r: #F57F6C;
-    --rl: #FCB5AA;
-    --g: #52B87A;
-    --gl: #91D4A8;
-    --y: #D99530;
-    --yl: #E9BE74;
-    --b: #498DD1;
-    --bl: #7FB6ED;
-    --m: #F88AAF;
-    --ml: #FCACC5;
-    --c: #32C5D2;
-    --cl: #5EDEE3;
-    --w: #FFFFFF;
+    --red: #F57F6C;
+    --red-light: #FCB5AA;
+    --green: #52B87A;
+    --green-light: #91D4A8;
+    --yellow: #D99530;
+    --yellow-light: #E9BE74;
+    --blue: #498DD1;
+    --blue-light: #7FB6ED;
+    --magenta: #F88AAF;
+    --magenta-light: #FCACC5;
+    --cyan: #32C5D2;
+    --cyan-light: #5EDEE3;
+    --white: #FFFFFF;
 }
 
 * {
@@ -26,23 +28,23 @@
 
 body {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 1.6;
-    background-color: var(--bg);
-    color: rgba(255, 255, 255, 0.65);
+    background-color: var(--background);
+    color: var(--white);
     padding: 0;
 }
 
 .container {
-    max-width: 1200px;
-    padding: 5rem;
+    max-width: 1400px;  /* More reasonable max width */
+    padding: 3rem 5rem;  /* Adjusted padding */
 }
 
 /* Header */
 header {
     margin-bottom: 2rem;
     padding-bottom: 1rem;
-    border-bottom: 1px solid #666666;
+    border-bottom: 1px solid var(--grey);
 }
 
 header h1 {
@@ -52,16 +54,16 @@ header h1 {
 }
 
 header h1 a {
-    color: var(--r);
+    color: var(--red);
     text-decoration: none;
 }
 
 header h1 a:hover {
-    color: var(--rl);
+    color: var(--red-light);
 }
 
 .subtitle {
-    color: #666666;
+    color: var(--grey);
     font-size: 0.9rem;
 }
 
@@ -73,8 +75,8 @@ header h1 a:hover {
 .search-wrapper {
     display: flex;
     align-items: center;
-    background-color: var(--bg);
-    border: 1px solid var(--gy);
+    background-color: var(--background);
+    border: 1px solid var(--grey);
     border-radius: 2px;
     padding: 0.5rem 0.75rem;
 }
@@ -89,14 +91,14 @@ header h1 a:hover {
     flex: 1;
     background: transparent;
     border: none;
-    color: rgba(255, 255, 255, 0.65);
+    color: var(--white);
     font-family: 'JetBrains Mono', monospace;
     font-size: 14px;
     outline: none;
 }
 
 #search-input::placeholder {
-    color: #666666;
+    color: var(--grey);
 }
 
 .search-results {
@@ -104,8 +106,8 @@ header h1 a:hover {
 }
 
 .search-result {
-    background-color: #2a2a2a;
-    border: 1px solid #666666;
+    background-color: var(--background-light);
+    border: 1px solid var(--grey);
     border-radius: 2px;
     padding: 0.75rem;
     margin-bottom: 0.5rem;
@@ -113,35 +115,35 @@ header h1 a:hover {
 }
 
 .search-result:hover {
-    border-color: var(--cl);
+    border-color: var(--cyan-light);
 }
 
 .search-result a {
-    color: rgba(255, 255, 255, 0.65);
+    color: var(--white);
     text-decoration: none;
     display: block;
 }
 
 .search-result h3 {
-    color: var(--g);
+    color: var(--green);
     font-size: 1rem;
     margin-bottom: 0.25rem;
 }
 
 .search-result .snippet {
-    color: #666666;
+    color: var(--grey);
     font-size: 0.85rem;
     margin-top: 0.25rem;
 }
 
 .search-result mark {
     background-color: rgba(173, 149, 233, 0.16);
-    color: var(--g);
+    color: var(--green);
 }
 
 /* Docs List */
 .docs-list h2 {
-    color: rgba(255, 255, 255, 0.65);
+    color: var(--white);
     font-size: 1.2rem;
     margin-bottom: 1rem;
     font-weight: 500;
@@ -150,7 +152,7 @@ header h1 a:hover {
 .doc-item {
     margin-bottom: 1rem;
     padding-bottom: 1rem;
-    border-bottom: 1px solid #666666;
+    border-bottom: 1px solid var(--grey);
 }
 
 .doc-item:last-child {
@@ -158,20 +160,20 @@ header h1 a:hover {
 }
 
 .doc-item a {
-    color: rgba(255, 255, 255, 0.65);
+    color: var(--white);
     text-decoration: none;
     display: block;
 }
 
 .doc-item h3 {
-    color: var(--g);
+    color: var(--green);
     font-size: 1rem;
     margin-bottom: 0.25rem;
     font-weight: 500;
 }
 
 .doc-item a:hover h3 {
-    color: var(--gl);
+    color: var(--green-light);
 }
 
 .meta {
@@ -179,7 +181,7 @@ header h1 a:hover {
     gap: 1rem;
     align-items: center;
     font-size: 0.85rem;
-    color: #666666;
+    color: var(--grey);
 }
 
 .tags {
@@ -188,23 +190,23 @@ header h1 a:hover {
 }
 
 .tag {
-    color: var(--bl);
+    color: var(--blue-light);
 }
 
 /* Single Doc */
 .doc-single {
-    max-width: 800px;
+    max-width: 1200px;  /* Increased from 800px */
 }
 
 .doc-header {
     margin-bottom: 2rem;
     padding-bottom: 1rem;
-    border-bottom: 1px solid #666666;
+    border-bottom: 1px solid var(--grey);
 }
 
 .doc-header h1 {
-    color: var(--g);
-    font-size: 1.5rem;
+    color: var(--green);
+    font-size: 1.6rem;
     margin-bottom: 0.5rem;
     font-weight: 500;
 }
@@ -214,15 +216,15 @@ header h1 a:hover {
 }
 
 .doc-content h2 {
-    color: var(--c);
-    font-size: 1.2rem;
+    color: var(--cyan);
+    font-size: 1.4rem;
     margin: 1.5rem 0 1rem 0;
     font-weight: 500;
 }
 
 .doc-content h3 {
-    color: var(--yl);
-    font-size: 1rem;
+    color: var(--yellow-light);
+    font-size: 1.2rem;
     margin: 1rem 0 0.5rem 0;
     font-weight: 500;
 }
@@ -243,15 +245,15 @@ header h1 a:hover {
 
 .doc-content code {
     background-color: none;
-    color: var(--w);
+    color: var(--white);
     padding: 0.15rem 0.4rem;
     border-radius: 2px;
     font-size: 0.9em;
 }
 
 .doc-content pre {
-    background-color: none;
-    border: 1px solid #666666;
+    background-color: var(--background-light);
+    border: 1px solid var(--grey);
     border-radius: 2px;
     padding: 1rem;
     overflow-x: auto;
@@ -264,34 +266,34 @@ header h1 a:hover {
 }
 
 .doc-content a {
-    color: var(--c);
+    color: var(--cyan);
     text-decoration: underline;
 }
 
 .doc-content a:hover {
-    color: var(--cl);
+    color: var(--cyan-light);
 }
 
 .doc-footer {
     padding-top: 1rem;
-    border-top: 1px solid #666666;
+    border-top: 1px solid var(--grey);
 }
 
 .back-link {
-    color: #666666;
+    color: var(--grey);
     text-decoration: none;
     font-size: 0.9rem;
 }
 
 .back-link:hover {
-    color: var(--cl);
+    color: var(--cyan-light);
 }
 
 .highlight {
-    background-color: transparent;
-    border: 1px solid #666666;
+    background-color: var(--background-light);
+    border: 1px solid var(--grey);
     border-radius: 2px;
-    padding: 1.0rem;  /* Reduced from 1rem */
+    padding: 1.0rem;
     overflow-x: auto;
     margin-bottom: 1rem;
 }
@@ -299,16 +301,16 @@ header h1 a:hover {
 .highlight pre {
     background: none !important;
     background-color: transparent;
-    padding: 0;  /* Changed from none */
-    margin: 0;   /* Changed from none */
-    border: 0;   /* Changed from none */
+    padding: 0;
+    margin: 0;
+    border: 0;
 }
 
-.highlight .c { color: #666666; } /* Comment */
-.highlight .k { color: var(--r); } /* Keyword */
-.highlight .s { color: var(--g); } /* String */
-.highlight .n { color: var(--b); } /* Name */
-.highlight .o { color: var(--c); } /* Operator */
+.highlight .c { color: var(--grey); } /* Comment */
+.highlight .k { color: var(--red); } /* Keyword */
+.highlight .s { color: var(--green); } /* String */
+.highlight .n { color: var(--blue); } /* Name */
+.highlight .o { color: var(--cyan); } /* Operator */
 
 
 /* Graphics */
@@ -322,14 +324,14 @@ header h1 a:hover {
 footer {
     margin-top: 3rem;
     padding-top: 1rem;
-    border-top: 1px solid #666666;
-    color: #666666;
+    border-top: 1px solid var(--grey);
+    color: var(--grey);
     font-size: 0.85rem;
 }
 
 kbd {
-    background-color: #2a2a2a;
-    border: 1px solid #666666;
+    background-color: var(--background-light);
+    border: 1px solid var(--grey);
     border-radius: 2px;
     padding: 0.1rem 0.4rem;
     font-family: 'JetBrains Mono', monospace;
@@ -339,7 +341,7 @@ kbd {
 /* Selection */
 ::selection {
     background-color: rgba(173, 149, 233, 0.16);
-    color: var(--g);
+    color: var(--green);
 }
 
 /* Scrollbar */
@@ -349,14 +351,83 @@ kbd {
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--bg);
+    background: var(--background);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #333333;
+    background: var(--grey-dark);
     border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #666666;
+    background: var(--grey);
+}
+
+/* Responsive adjustments to maintain vim feel */
+@media (max-width: 1400px) {
+    .container {
+        padding: 3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 2rem 1.5rem;
+    }
+    
+    .doc-single {
+        max-width: 100%;
+    }
+}
+
+
+.docs-header {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--grey);
+    border-radius: 2px;
+}
+
+.filter-btn {
+    background: transparent;
+    border: none;
+    color: var(--white);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    transition: all 0.15s;
+    border-right: 1px solid var(--grey);
+}
+
+.filter-btn:last-child {
+    border-right: none;
+}
+
+.filter-btn:hover:not(.active) {
+    background: var(--background-light);
+}
+
+.filter-btn.active {
+    background: var(--green);
+    color: var(--background);
+}
+
+.filter-separator {
+    display: none;
+}
+
+.docs-section {
+    animation: fadeIn 0.15s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
