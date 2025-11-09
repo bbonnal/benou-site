@@ -25,9 +25,9 @@ jobs:
         
       - name: Upload public folder recursively via SFTP
         env:
-          SFTP_HOST: ${{ secrets.SFTP_HOST }}
-          SFTP_USER: ${{ secrets.SFTP_USER }}
-          SFTP_PASS: ${{ secrets.SFTP_PASS }}
+          SFTP_HOST: ftp.cluster130.hosting.ovh.net
+          SFTP_USER: ${{ secrets.OVH_FTP_USER }}
+          SFTP_PASS: ${{ secrets.OVH_FTP_PASSWORD }}
         run: |
           LOCAL_DIR=public
           REMOTE_DIR=/remote/path
