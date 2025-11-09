@@ -1,4 +1,4 @@
-baseURL = "http://localhost:1313/"
+baseURL = "https://docs.bonnal.ch"
 languageCode = "en-us"
 title = "$ linux docs"
 theme = "reveal-hugo"
