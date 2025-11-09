@@ -1,21 +1,16 @@
-# Sample workflow for building and deploying a Hugo site to OVH
+# Build and deploy Hugo site to OVH (with reveal-hugo theme)
 name: Deploy Hugo site to OVH
 
 on:
-  # Runs on pushes targeting the default branch
   push:
     branches: ["main"]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# Default to bash
 defaults:
   run:
     shell: bash
 
 jobs:
-  # Build and deploy job
   build-and-deploy:
     runs-on: ubuntu-latest
     env:
@@ -23,10 +18,15 @@ jobs:
       DEPLOY_BRANCH: deploy
 
     steps:
-      - name: Checkout repository
+      - name: Checkout repository (with nested submodules)
         uses: actions/checkout@v4
         with:
-          submodules: recursive
+          submodules: true
+          fetch-depth: 0
+
+      - name: Ensure nested submodules are initialized
+        run: |
+          git submodule update --init --recursive
 
       - name: Install Hugo CLI
         run: |
@@ -40,8 +40,7 @@ jobs:
       - name: Build Hugo site
         env:
           HUGO_ENVIRONMENT: production
-        run: |
-          hugo --minify
+        run: hugo --minify
 
       - name: Deploy public/ to OVH deploy branch
         run: |
