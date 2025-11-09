@@ -29,8 +29,8 @@ jobs:
           server: ftp.cluster130.hosting.ovh.net
           username: ${{ secrets.OVH_FTP_USER }}
           password: ${{ secrets.OVH_FTP_PASSWORD }}
-          protocol: ftps                 
-          port: 21                       
+          protocol: ftps-legacy          # Use SFTP instead of plain FTP
+          port: 22                       # SFTP uses port 22               
           local-dir: public/             
           server-dir: /docs/ 
           log-level: standard
