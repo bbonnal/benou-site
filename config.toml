@@ -1,7 +1,6 @@
 baseURL = "https://docs.bonnal.ch"
 languageCode = "en-us"
 title = "$ linux docs"
-theme = "reveal-hugo"
 
 [outputs]
   home = ["HTML", "JSON"]
@@ -14,15 +13,10 @@ theme = "reveal-hugo"
 
 [params]
   description = "Personal Linux configuration and command reference"
-  revealTheme = "benou-theme"
 
 [markup]
   [markup.goldmark]
     [markup.goldmark.renderer]
       unsafe = true
 
-[outputFormats.Reveal]
-baseName = "index"
-mediaType = "text/html"
-isHTML = true
 
