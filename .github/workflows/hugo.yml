@@ -32,5 +32,5 @@ jobs:
           protocol: ftp                 
           port: 21                       
           local-dir: public/             
-          server-dir: /home/benousf/docs/ 
+          server-dir: /docs/ 
           log-level: standard
