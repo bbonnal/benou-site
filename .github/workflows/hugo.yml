@@ -1,54 +1,36 @@
-# Build and deploy Hugo site to OVH (with reveal-hugo theme)
-name: Deploy Hugo site to OVH
+name: Deploy Hugo to OVH
 
 on:
   push:
     branches: ["main"]
-  workflow_dispatch:
-
-defaults:
-  run:
-    shell: bash
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    env:
-      HUGO_VERSION: 0.128.0
-      DEPLOY_BRANCH: deploy
-
     steps:
-      - name: Checkout repository (with nested submodules)
+      - name: Checkout
         uses: actions/checkout@v4
         with:
-          submodules: true
-          fetch-depth: 0
+          submodules: recursive
 
-      - name: Ensure nested submodules are initialized
-        run: |
-          git submodule update --init --recursive
-
-      - name: Install Hugo CLI
+      - name: Install Hugo
         run: |
           wget -O ${{ runner.temp }}/hugo.deb \
-            https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb
+            https://github.com/gohugoio/hugo/releases/download/v0.128.0/hugo_extended_0.128.0_linux-amd64.deb
           sudo dpkg -i ${{ runner.temp }}/hugo.deb
 
       - name: Install Dart Sass
         run: sudo snap install dart-sass
 
-      - name: Build Hugo site
-        env:
-          HUGO_ENVIRONMENT: production
+      - name: Build site
         run: hugo --minify
 
-      - name: Deploy public/ to OVH deploy branch
-        run: |
-          cd public
-          git init
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
-          git add .
-          git commit -m "Deploy $(date)"
-          git branch -M $DEPLOY_BRANCH
-          git push --force "https://${{ secrets.DEPLOY_TOKEN }}@github.com/${{ github.repository }}.git" $DEPLOY_BRANCH
+      - name: Deploy via SFTP
+        uses: burnett01/rsync-deployments@v4
+        with:
+          switches: -avz --delete
+          path: /docs/public/
+          remote_path: /www/docs.bonnal.ch
+          remote_host: ftp.cluster130.hosting.ovh.net
+          remote_user: your-ftp-user
+          ssh_private_key: ${{ secrets.OVH_SSH_KEY }}
