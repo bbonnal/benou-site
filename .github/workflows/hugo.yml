@@ -51,4 +51,4 @@ jobs:
           git add .
           git commit -m "Deploy $(date)"
           git branch -M $DEPLOY_BRANCH
-          git push --force "https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" $DEPLOY_BRANCH
+          git push --force "https://${{ secrets.DEPLOY_TOKEN }}@github.com/${{ github.repository }}.git" $DEPLOY_BRANCH
