@@ -31,5 +31,5 @@ jobs:
           user: ${{ secrets.OVH_FTP_USER }}
           pass: ${{ secrets.OVH_FTP_PASSWORD }}
           localDir: public/
-          remoteDir: /docs/
+          remoteDir: /home/benousf/docs/
           options: '--verbose'
