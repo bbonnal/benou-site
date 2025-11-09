@@ -1,0 +1,6 @@
+<!--layouts/shortcodes/svg.html-->
+{{$svg := .Get 0}}
+{{$class := .Get 1}}
+<div class="svg-container {{ $class }}">
+{{ $svg | readFile | safeHTML }}
+</div>

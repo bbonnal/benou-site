@@ -1,0 +1,448 @@
+@import "reveal-js/dist/theme/template/mixins";
+@import "reveal-js/dist/theme/template/settings";
+
+$bg: #222222;                           // Main background
+$fg: rgba(255, 255, 255, 0.65);        // Main text color
+$gy: #666666;                          // Gray (borders, comments)
+
+// Primary colors (regular and light variants)
+$r: #F57F6C;  $rl: #FCB5AA;           // Red
+$g: #52B87A;  $gl: #91D4A8;           // Green
+$y: #D99530;  $yl: #E9BE74;           // Yellow
+$b: #498DD1;  $bl: #7FB6ED;           // Blue
+$m: #F88AAF;  $ml: #FCACC5;           // Magenta
+$c: #32C5D2;  $cl: #5EDEE3;           // Cyan
+$w: #FFFFFF;                           // White
+
+// Background of the presentation
+$backgroundColor: #222222;
+
+$mainFont: 'JetBrains Mono', monospace;
+$headingFont: 'JetBrains Mono', monospace;
+$mainFontSize: 20px;  // Reduced from 38px for better fitting
+
+// Heading configuration
+$headingTextShadow: none;
+$headingLetterSpacing: normal;
+$headingTextTransform: uppercase;
+
+// Heading sizes (relative to base)
+$heading1Size: 1.2em;  
+$heading2Size: 1.0em;
+$heading3Size: 0.8em;
+$heading4Size: 0.6em;
+
+// Link styling
+$linkColor: $c;
+$linkColorHover: lighten($c, 15%);
+$selectionBackgroundColor: rgba(173, 149, 233, 0.16);
+
+// Import base reveal.js theme
+@import "reveal-js/dist/theme/template/theme";
+
+
+.reveal pre,
+.reveal code {
+  font-family: $mainFont;
+  font-size: 0.8em;
+  line-height: 1.4em;
+  background: transparent !important;
+  color: $w;
+  border: 1px solid $gy;
+  border-radius: 2px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+// Inline code (smaller, minimal padding)
+.reveal code {
+  padding: 0.15rem 0.4rem;
+  border: 0;
+  border-radius: 0;
+}
+
+// Syntax highlighting colors
+.reveal .highlight {
+  .c  { color: $gy; }  // Comments
+  .k  { color: $r; }   // Keywords (if, for, def, class)
+  .s  { color: $g; }   // Strings
+  .n  { color: $b; }   // Names (variables, functions)
+  .o  { color: $c; }   // Operators (+, -, =, etc.)
+  .m  { color: $m; }   // Numbers
+  .na { color: $y; }   // Attributes
+}
+
+
+.reveal h1 {
+    position: absolute;
+    padding: 10px 20px 10px 20px;
+    top:0px;
+    left: 0px;
+    z-index:500;
+    color: $r;
+    font-weight: bold;
+}
+.reveal h2 {
+    position: absolute;
+    padding: 10px 20px 10px 20px;
+    top:40px;
+    left: 0px;
+    z-index:500;
+    color: $g;
+    font-weight: normal;
+    font-style: italic;
+}
+
+
+// Text alignment utilities
+.reveal {
+  .text-left   { text-align: left !important; }
+  .text-center { text-align: center !important; }
+  .text-right  { text-align: right !important; }
+}
+
+// Color utilities - apply theme colors to text
+.reveal {
+  .text-red     { color: $r !important; }
+  .text-green   { color: $g !important; }
+  .text-yellow  { color: $y !important; }
+  .text-blue    { color: $b !important; }
+  .text-magenta { color: $m !important; }
+  .text-cyan    { color: $c !important; }
+}
+
+// Background color utilities
+.reveal {
+  .bg-red     { background-color: $r !important; padding: 0.5rem; }
+  .bg-green   { background-color: $g !important; padding: 0.5rem; }
+  .bg-yellow  { background-color: $y !important; padding: 0.5rem; }
+  .bg-blue    { background-color: $b !important; padding: 0.5rem; }
+  .bg-magenta { background-color: $m !important; padding: 0.5rem; }
+  .bg-cyan    { background-color: $c !important; padding: 0.5rem; }
+}
+
+
+// UNCOMMENT TO ENABLE DEBUG MODE:
+/*
+.reveal * {
+  outline: 1px solid rgba(255, 0, 0, 0.3) !important;
+  background: rgba(255, 0, 0, 0.02) !important;
+}
+
+.reveal section {
+  outline: 2px solid rgba(0, 255, 0, 0.5) !important;
+  background: rgba(0, 255, 0, 0.05) !important;
+}
+
+.reveal h1, .reveal h2, .reveal h3 {
+  outline: 2px solid rgba(0, 0, 255, 0.5) !important;
+  background: rgba(0, 0, 255, 0.05) !important;
+}
+
+.reveal svg, .reveal img, .reveal figure {
+  outline: 2px solid rgba(255, 255, 0, 0.8) !important;
+  background: rgba(255, 255, 0, 0.1) !important;
+}
+*/
+
+
+.reveal .slides {
+  // Reduce padding around slide content
+  section {
+    padding: 0;
+    height: 100%;
+    display: flex !important;  // Make section a flex container
+    flex-direction: column !important;  // Stack children vertically
+    justify-content: center !important;  // Center content vertically
+    
+    // Tighter spacing for headings
+    h1, h2, h3, h4, h5, h6 {
+      flex-shrink: 0;  // Don't shrink headings
+    }
+    
+    // Reduce paragraph spacing
+    p {
+      margin: 0;
+      flex-shrink: 0;  // Don't shrink paragraphs
+    }
+  }
+}
+
+
+.reveal ul,
+.reveal ol {
+  margin: 0.5rem 0;  // Reduced from 1.5rem
+  
+  li {
+    margin-bottom: 0.4rem;  // Reduced from 0.8rem
+    
+    // Nested lists
+    ul, ol {
+      margin: 0.3rem 0 0.3rem 2rem;  // Reduced from 0.5rem
+      font-size: 0.9em;
+    }
+  }
+}
+
+
+
+
+.reveal table {
+  margin: 0.5rem auto;
+  border-collapse: collapse;
+  border: 2px solid $gy;
+  
+  th {
+    background-color: lighten($bg, 10%);
+    color: $c;
+    font-weight: 400;
+    text-transform: uppercase;
+    font-size: 0.7em;
+    padding: 0.8rem 1rem;
+    border-bottom: 2px solid $gy;
+  }
+  
+  td {
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid lighten($gy, 20%);
+    font-size: 0.7em;
+  }
+  
+  // Alternating row colors
+  tbody tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.02);
+  }
+  
+  tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+}
+
+
+.reveal blockquote {
+  position: relative;
+  margin: 2rem auto;
+  padding: 1.5rem 2rem 1.5rem 3rem;
+  background: lighten($bg, 5%);
+  border-left: 4px solid $c;
+  font-style: italic;
+  color: $fg;
+  max-width: 90%;
+  
+  &::before {
+    content: "";
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
+    font-size: 3rem;
+    color: $c;
+    opacity: 0.3;
+    line-height: 1;
+  }
+  
+  p {
+    margin: 0;
+  }
+  
+  cite {
+    display: block;
+    margin-top: 1rem;
+    font-size: 0.8em;
+    color: lighten($fg, 10%);
+    
+    &::before {
+      content: "— ";
+    }
+  }
+}
+
+
+.reveal img {
+  max-width: 90%;
+  max-height: 60vh;
+  height: auto;
+  border: 2px solid $gy;
+  border-radius: 4px;
+  margin: 1.5rem auto;  // Reduced margin
+  
+  &.no-border {
+    border: none;
+  }
+  
+  &.shadow {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  }
+}
+
+.reveal figure {
+  margin: 1.5rem auto;  // Reduced from 1.5rem
+  
+  img {
+    max-height: 50vh;
+  }
+  
+  figcaption {
+    margin-top: 0.5rem;  // Reduced from 0.8rem
+    font-size: 0.7em;
+    color: lighten($fg, 15%);
+    font-style: italic;
+  }
+}
+
+// SVG-specific sizing
+.reveal svg {
+  max-width: 90%;
+  max-height: 60vh;
+  width: auto;
+  height: auto;
+  display: block;
+  margin: auto;
+}
+
+// Container wrapper for SVGs to control sizing
+.reveal .svg-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 2.0rem 0;  // Minimal margin
+  
+  svg {
+    width: 100%;
+    height: auto;
+    max-width: none;  // Remove max-width constraint
+    max-height: none; // Remove max-height constraint
+  }
+  
+  &.svg-tiny svg { width: 10%; }
+  &.svg-small svg { width: 30%; }
+  &.svg-medium svg { width: 50%; }
+  &.svg-large svg { width: 100%; }
+  &.svg-full svg { width: 100%; max-height: 80vh; }
+}
+
+
+.reveal .fragment {
+  &.highlight-current-red.visible.current-fragment {
+    color: $r;
+  }
+  
+  &.highlight-current-green.visible.current-fragment {
+    color: $g;
+  }
+  
+  &.highlight-current-blue.visible.current-fragment {
+    color: $b;
+  }
+}
+
+
+
+.reveal {
+  .box {
+    padding: 1.5rem;
+    margin: 2rem 0;
+    border-radius: 4px;
+    border-left: 4px solid;
+    
+    h3, h4 {
+      margin-top: 0;
+      text-transform: none;
+    }
+  }
+  
+  .box-info {
+    @extend .box;
+    background-color: rgba($b, 0.1);
+    border-color: $b;
+  }
+  
+  .box-success {
+    @extend .box;
+    background-color: rgba($g, 0.1);
+    border-color: $g;
+  }
+  
+  .box-warning {
+    @extend .box;
+    background-color: rgba($y, 0.1);
+    border-color: $y;
+  }
+  
+  .box-danger {
+    @extend .box;
+    background-color: rgba($r, 0.1);
+    border-color: $r;
+  }
+}
+
+
+.reveal .columns {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  
+  .column {
+    flex: 1;
+    
+    &.small {
+      flex: 0.5;
+    }
+    
+    &.large {
+      flex: 1.5;
+    }
+  }
+}
+
+
+.reveal .progress {
+  background: rgba($gy, 0.2);
+  height: 4px;
+  
+  span {
+    background: $c;
+    transition: width 0.3s ease;
+  }
+}
+
+.reveal .controls {
+  color: $c;
+  
+  button {
+    &:hover {
+      color: $cl;
+    }
+  }
+}
+
+
+.reveal {
+  .slide-dark {
+    background-color: darken($bg, 5%) !important;
+  }
+  
+  .slide-accent {
+    background: linear-gradient(135deg, $b 0%, $c 100%) !important;
+    
+    h1, h2, h3, h4, h5, h6 {
+      color: $w !important;
+    }
+  }
+}
+
+
+@media print {
+  .reveal {
+    background: white;
+    color: black;
+    
+    h1, h2, h3, h4, h5, h6 {
+      color: black;
+    }
+    
+    code, pre {
+      border-color: #ccc;
+    }
+  }
+}

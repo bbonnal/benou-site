@@ -1,0 +1,28 @@
+{{ define "main" }}
+<article class="doc-single">
+    <div class="doc-header">
+        <h1>{{ .Title }}</h1>
+        <div class="meta">
+            <time>{{ .Date.Format "2006-01-02" }}</time>
+            {{ if .Params.tags }}
+            <span class="tags">
+                {{ range .Params.tags }}
+                <span class="tag">#{{ . }}</span>
+                {{ end }}
+            </span>
+            {{ end }}
+        </div>
+    </div>
+    
+    <div class="doc-content">
+        {{ .Content }}
+
+
+
+    </div>
+    
+    <div class="doc-footer">
+        <a href="/" class="back-link">← back to docs</a>
+    </div>
+</article>
+{{ end }}

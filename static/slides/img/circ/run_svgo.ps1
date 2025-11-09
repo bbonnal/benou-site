@@ -1,0 +1,1 @@
+svgo -f $PSScriptRoot\src -o $PSScriptRoot\out

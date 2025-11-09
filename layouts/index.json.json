@@ -1,0 +1,11 @@
+{{- $pages := slice -}}
+{{- range where .Site.RegularPages "Section" "docs" -}}
+  {{- $pages = $pages | append (dict 
+    "title" .Title 
+    "tags" .Params.tags 
+    "content" .Plain 
+    "permalink" .Permalink 
+    "date" (.Date.Format "2006-01-02")
+  ) -}}
+{{- end -}}
+{{- $pages | jsonify -}}

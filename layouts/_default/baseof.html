@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{ partial "head.html" . }}
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><a href="/">$ {{ .Site.Title }}</a></h1>
+            <p class="subtitle">{{ .Site.Params.description }}</p>
+        </header>
+        
+        {{ if .IsHome }}
+            {{ partial "search.html" . }}
+        {{ end }}
+        
+        <main>
+            {{ block "main" . }}{{ end }}
+
+        </main>
+        
+        <footer>
+            <p>Press <kbd>Ctrl+K</kbd> to focus search</p>
+        </footer>
+    </div>
+
+{{ if .Page.Store.Get "hasMermaid" }}
+<script src="/js/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'dark'});
+</script>
+{{ end }}
+
+</body>
+</html>

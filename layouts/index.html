@@ -1,0 +1,22 @@
+{{ define "main" }}
+<div class="docs-list">
+    <h2>Recent Docs</h2>
+    {{ range first 20 (where .Site.RegularPages "Section" "docs") }}
+    <article class="doc-item">
+        <a href="{{ .Permalink }}">
+            <h3>{{ .Title }}</h3>
+            <div class="meta">
+                <time>{{ .Date.Format "2006-01-02" }}</time>
+                {{ if .Params.tags }}
+                <span class="tags">
+                    {{ range .Params.tags }}
+                    <span class="tag">#{{ . }}</span>
+                    {{ end }}
+                </span>
+                {{ end }}
+            </div>
+        </a>
+    </article>
+    {{ end }}
+</div>
+{{ end }}

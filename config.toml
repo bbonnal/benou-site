@@ -1,0 +1,28 @@
+baseURL = "http://localhost:1313/"
+languageCode = "en-us"
+title = "$ linux docs"
+theme = "reveal-hugo"
+
+[outputs]
+  home = ["HTML", "JSON"]
+
+[outputFormats.JSON]
+  baseName = "index"
+  isPlainText = true
+  mediaType = "application/json"
+  notAlternative = true
+
+[params]
+  description = "Personal Linux configuration and command reference"
+  revealTheme = "benou-theme"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[outputFormats.Reveal]
+baseName = "index"
+mediaType = "text/html"
+isHTML = true
+
