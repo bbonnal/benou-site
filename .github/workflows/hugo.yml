@@ -29,20 +29,22 @@ jobs:
           SFTP_USER: ${{ secrets.OVH_FTP_USER }}
           SFTP_PASS: ${{ secrets.OVH_FTP_PASSWORD }}
         run: |
+          mkdir -p ~/.ssh
+          echo "$SFTP_HOST" >> ~/.ssh/known_hosts  # optional if using fingerprint
+          ssh-keyscan -H $SFTP_HOST >> ~/.ssh/known_hosts
+        
           LOCAL_DIR=public
           REMOTE_DIR=/remote/path
-
-          # Generate a list of folders to create on the remote
+        
+          # Generate mkdirs.sftp as before
           find $LOCAL_DIR -type d | while read dir; do
             remote_path="$REMOTE_DIR/${dir#$LOCAL_DIR/}"
             echo "mkdir -p $remote_path"
           done > mkdirs.sftp
-
-          # Generate a list of files to upload
+        
           find $LOCAL_DIR -type f | while read file; do
             remote_path="$REMOTE_DIR/${file#$LOCAL_DIR/}"
             echo "put $file $remote_path"
           done >> mkdirs.sftp
-
-          # Run sftp with batch file
+        
           sftp -oBatchMode=no -b mkdirs.sftp $SFTP_USER@$SFTP_HOST
