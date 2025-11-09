@@ -24,27 +24,27 @@ jobs:
         run: hugo --minify
         
       - name: Upload public folder recursively via SFTP
-        env:
-          SFTP_HOST: ftp.cluster130.hosting.ovh.net
-          SFTP_USER: ${{ secrets.OVH_FTP_USER }}
-          SFTP_PASS: ${{ secrets.OVH_FTP_PASSWORD }}
         run: |
-          mkdir -p ~/.ssh
-          echo "$SFTP_HOST" >> ~/.ssh/known_hosts  # optional if using fingerprint
-          ssh-keyscan -H $SFTP_HOST >> ~/.ssh/known_hosts
-        
+          sudo apt-get update && sudo apt-get install -y sshpass
+      
           LOCAL_DIR=public
           REMOTE_DIR=/remote/path
-        
-          # Generate mkdirs.sftp as before
+      
+          # Create batch file with mkdir commands
           find $LOCAL_DIR -type d | while read dir; do
             remote_path="$REMOTE_DIR/${dir#$LOCAL_DIR/}"
             echo "mkdir -p $remote_path"
           done > mkdirs.sftp
-        
+      
+          # Add put commands for files
           find $LOCAL_DIR -type f | while read file; do
             remote_path="$REMOTE_DIR/${file#$LOCAL_DIR/}"
             echo "put $file $remote_path"
           done >> mkdirs.sftp
-        
-          sftp -oBatchMode=no -b mkdirs.sftp $SFTP_USER@$SFTP_HOST
+      
+          # Run SFTP non-interactively
+          sshpass -p "$SFTP_PASS" sftp -oStrictHostKeyChecking=no -b mkdirs.sftp $SFTP_USER@$SFTP_HOST
+        env:
+          SFTP_HOST: ftp.cluster130.hosting.ovh.net
+          SFTP_USER: ${{ secrets.OVH_FTP_USER }}
+          SFTP_PASS: ${{ secrets.OVH_FTP_PASSWORD }}
