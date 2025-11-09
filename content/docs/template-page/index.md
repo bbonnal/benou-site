@@ -8,7 +8,7 @@ tags: ["template", "svg"]
 
 <img src="Tux.svg" alt="Tux" width="200" style="display: block; margin: 0 auto;" />
 
-## I am sure it works now
+## I am sure it works now for sure
 
 ```mermaid
 ---
