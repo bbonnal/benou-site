@@ -26,7 +26,7 @@ jobs:
         run: hugo --minify
 
       - name: Deploy via SFTP
-        uses: burnett01/rsync-deployments@v4
+        uses: burnett01/rsync-deployments@7.1.0
         with:
           switches: -avz --delete
           path: /docs/public/
