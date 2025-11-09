@@ -23,14 +23,13 @@ jobs:
       - name: Build Hugo site
         run: hugo --minify
         
-      - name: Deploy using FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: Deploy using SFTP
+        uses: pressidium/lftp-mirror-action@v1
         with:
-          server: ftp.cluster130.hosting.ovh.net
-          username: ${{ secrets.OVH_FTP_USER }}
-          password: ${{ secrets.OVH_FTP_PASSWORD }}
-          protocol: ftps-legacy          # Use SFTP instead of plain FTP
-          port: 22                       # SFTP uses port 22               
-          local-dir: public/             
-          server-dir: /docs/ 
-          log-level: standard
+          host: ftp.cluster130.hosting.ovh.net
+          port: 22
+          user: ${{ secrets.OVH_FTP_USER }}
+          pass: ${{ secrets.OVH_FTP_PASSWORD }}
+          localDir: public/
+          remoteDir: /docs/
+          options: '--verbose'
