@@ -22,34 +22,27 @@ jobs:
 
       - name: Build Hugo site
         run: hugo --minify
+        
+      - name: Upload public folder recursively via SFTP
+        env:
+          SFTP_HOST: ${{ secrets.SFTP_HOST }}
+          SFTP_USER: ${{ secrets.SFTP_USER }}
+          SFTP_PASS: ${{ secrets.SFTP_PASS }}
+        run: |
+          LOCAL_DIR=public
+          REMOTE_DIR=/remote/path
 
-      - name: Ensure remote directories exist recursively
-        uses: appleboy/ssh-action@v0.1.7
-        with:
-          host: ftp.cluster130.hosting.ovh.net
-          username: ${{ secrets.OVH_FTP_USER }}
-          password: ${{ secrets.OVH_FTP_PASSWORD }}
-          port: 22
-          script: |
-            set -euo pipefail
-            BASE="/home/benousf/docs"
-            cd public
-            find . -type d -print0 | while IFS= read -r -d '' dir; do
-              [ "$dir" = "." ] && continue
-              remote_dir="$BASE/${dir#./}"
-              echo "mkdir -p $remote_dir"
-              mkdir -p "$remote_dir"
-            done
+          # Generate a list of folders to create on the remote
+          find $LOCAL_DIR -type d | while read dir; do
+            remote_path="$REMOTE_DIR/${dir#$LOCAL_DIR/}"
+            echo "mkdir -p $remote_path"
+          done > mkdirs.sftp
 
-      - name: Deploy via SFTP
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.6
-        with:
-          server: ftp.cluster130.hosting.ovh.net
-          username: ${{ secrets.OVH_FTP_USER }}
-          password: ${{ secrets.OVH_FTP_PASSWORD }}
-          port: 22
-          local_path: public/*
-          remote_path: /home/benousf/docs/
-          delete_remote_files: true
-          sftp_only: false
-          rsyncArgs: '--mkpath -avz'
+          # Generate a list of files to upload
+          find $LOCAL_DIR -type f | while read file; do
+            remote_path="$REMOTE_DIR/${file#$LOCAL_DIR/}"
+            echo "put $file $remote_path"
+          done >> mkdirs.sftp
+
+          # Run sftp with batch file
+          sftp -oBatchMode=no -b mkdirs.sftp $SFTP_USER@$SFTP_HOST
