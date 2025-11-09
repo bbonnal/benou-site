@@ -23,28 +23,14 @@ jobs:
       - name: Build Hugo site
         run: hugo --minify
         
-      - name: Upload public folder recursively via SFTP
-        run: |
-          sudo apt-get update && sudo apt-get install -y sshpass
-      
-          LOCAL_DIR=public
-          REMOTE_DIR=/remote/path
-      
-          # Create batch file with mkdir commands
-          find $LOCAL_DIR -type d | while read dir; do
-            remote_path="$REMOTE_DIR/${dir#$LOCAL_DIR/}"
-            echo "mkdir -p $remote_path"
-          done > mkdirs.sftp
-      
-          # Add put commands for files
-          find $LOCAL_DIR -type f | while read file; do
-            remote_path="$REMOTE_DIR/${file#$LOCAL_DIR/}"
-            echo "put $file $remote_path"
-          done >> mkdirs.sftp
-      
-          # Run SFTP non-interactively
-          sshpass -p "$SFTP_PASS" sftp -oStrictHostKeyChecking=no -b mkdirs.sftp $SFTP_USER@$SFTP_HOST
-        env:
-          SFTP_HOST: ftp.cluster130.hosting.ovh.net
-          SFTP_USER: ${{ secrets.OVH_FTP_USER }}
-          SFTP_PASS: ${{ secrets.OVH_FTP_PASSWORD }}
+      - name: Deploy using FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ftp.cluster130.hosting.ovh.net
+          username: ${{ secrets.OVH_FTP_USER }}
+          password: ${{ secrets.OVH_FTP_PASSWORD }}
+          protocol: ftp                 
+          port: 21                       
+          local-dir: public/             
+          server-dir: /home/benousf/docs/ 
+          log-level: verbose
