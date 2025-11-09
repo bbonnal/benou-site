@@ -27,7 +27,7 @@ jobs:
         run: hugo --minify
 
       - name: Deploy via SFTP
-        uses: philippheuer/sftp-deploy@v4.2
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.6
         with:
           host: ftp.cluster130.hosting.ovh.net
           username: ${{ secrets.OVH_FTP_USER }}
