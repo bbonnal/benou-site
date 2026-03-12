@@ -27,9 +27,9 @@
 }
 
 body {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 16px;
-    line-height: 1.6;
+    font-family: 'Source Sans 3', 'Source Sans Pro', sans-serif;
+    font-size: 17px;
+    line-height: 1.7;
     background-color: var(--background);
     color: var(--white);
     padding: 0;
@@ -48,6 +48,7 @@ header {
 }
 
 header h1 {
+    font-family: 'JetBrains Mono', monospace;
     font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: 0.25rem;
@@ -93,7 +94,7 @@ header h1 a:hover {
     border: none;
     color: var(--white);
     font-family: 'JetBrains Mono', monospace;
-    font-size: 14px;
+    font-size: 13px;
     outline: none;
 }
 
@@ -114,7 +115,8 @@ header h1 a:hover {
     transition: border-color 0.2s;
 }
 
-.search-result:hover {
+.search-result:hover,
+.search-result.selected {
     border-color: var(--cyan-light);
 }
 
@@ -206,9 +208,9 @@ header h1 a:hover {
 
 .doc-header h1 {
     color: var(--green);
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     margin-bottom: 0.5rem;
-    font-weight: 500;
+    font-weight: 700;
 }
 
 .doc-content {
@@ -217,16 +219,16 @@ header h1 a:hover {
 
 .doc-content h2 {
     color: var(--cyan);
-    font-size: 1.4rem;
-    margin: 1.5rem 0 1rem 0;
-    font-weight: 500;
+    font-size: 1.45rem;
+    margin: 2rem 0 0.75rem 0;
+    font-weight: 600;
 }
 
 .doc-content h3 {
     color: var(--yellow-light);
     font-size: 1.2rem;
-    margin: 1rem 0 0.5rem 0;
-    font-weight: 500;
+    margin: 1.5rem 0 0.5rem 0;
+    font-weight: 600;
 }
 
 .doc-content p {
@@ -393,9 +395,9 @@ kbd {
     background: transparent;
     border: none;
     color: var(--white);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 1rem;
-    font-weight: 500;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
     cursor: pointer;
     padding: 0.5rem 1rem;
     transition: all 0.15s;
@@ -417,6 +419,92 @@ kbd {
 
 .filter-separator {
     display: none;
+}
+
+/* PDF Presenter */
+.pdf-presenter {
+    border: 1px solid var(--grey);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+}
+
+.pdf-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    background-color: var(--background-light);
+    border-bottom: 1px solid var(--grey);
+}
+
+.pdf-icon-wrap {
+    color: var(--red);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+}
+
+.pdf-meta {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+}
+
+.pdf-title {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--white);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pdf-description {
+    font-size: 0.85rem;
+    color: var(--grey);
+}
+
+.pdf-download-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-shrink: 0;
+    padding: 0.35rem 0.75rem;
+    background: transparent;
+    border: 1px solid var(--grey);
+    border-radius: 2px;
+    color: var(--grey);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    text-decoration: none;
+    transition: border-color 0.15s, color 0.15s;
+}
+
+.pdf-download-btn:hover {
+    border-color: var(--cyan);
+    color: var(--cyan);
+}
+
+.pdf-embed-wrap {
+    background: var(--background);
+}
+
+.pdf-embed-wrap iframe {
+    display: block;
+    border: none;
+}
+
+.pdf-fallback {
+    padding: 2rem;
+    color: var(--grey);
+    text-align: center;
+}
+
+.pdf-fallback a {
+    color: var(--cyan);
 }
 
 .docs-section {

@@ -1,4 +1,11 @@
 {{ define "main" }}
+<script>
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && !e.ctrlKey && !e.metaKey) {
+    window.location.href = "/";
+  }
+});
+</script>
 <article class="doc-single">
     <div class="doc-header">
         <h1>{{ .Title }}</h1>

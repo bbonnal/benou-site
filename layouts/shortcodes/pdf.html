@@ -1,0 +1,38 @@
+{{ $src := .Get "src" }}
+{{ $title := .Get "title" | default "" }}
+{{ $description := .Get "description" | default "" }}
+{{ $height := .Get "height" | default "780px" }}
+
+<div class="pdf-presenter">
+  <div class="pdf-card-header">
+    <div class="pdf-icon-wrap">
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+        <line x1="16" y1="13" x2="8" y2="13"/>
+        <line x1="16" y1="17" x2="8" y2="17"/>
+        <polyline points="10 9 9 9 8 9"/>
+      </svg>
+    </div>
+    <div class="pdf-meta">
+      {{ if $title }}<span class="pdf-title">{{ $title }}</span>{{ end }}
+      {{ if $description }}<span class="pdf-description">{{ $description }}</span>{{ end }}
+    </div>
+    <a href="{{ $src }}" download class="pdf-download-btn" title="Download PDF">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <polyline points="7 10 12 15 17 10"/>
+        <line x1="12" y1="15" x2="12" y2="3"/>
+      </svg>
+      Download
+    </a>
+  </div>
+  <div class="pdf-embed-wrap" style="height: {{ $height }}">
+    <iframe src="{{ $src }}" width="100%" height="100%" type="application/pdf" loading="lazy">
+      <p class="pdf-fallback">
+        Your browser cannot display this PDF.
+        <a href="{{ $src }}">Download it here</a>.
+      </p>
+    </iframe>
+  </div>
+</div>

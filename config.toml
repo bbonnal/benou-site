@@ -1,6 +1,6 @@
 baseURL = "https://docs.bonnal.ch"
 languageCode = "en-us"
-title = "$ linux docs"
+title = "benou docs"
 
 [outputs]
   home = ["HTML", "JSON"]
@@ -12,7 +12,7 @@ title = "$ linux docs"
   notAlternative = true
 
 [params]
-  description = "Personal Linux configuration and command reference"
+  description = "Personal documentation and knowledge base"
 
 [markup]
   [markup.goldmark]
