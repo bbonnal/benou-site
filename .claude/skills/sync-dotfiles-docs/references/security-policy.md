@@ -16,13 +16,16 @@ that ties a page to the real person or the real machine is not:
 | `bbonnal` (git handle) | links the docs to the real account |
 | `benjamin`, `bonnal`, real email | the actual identity |
 | real filesystem/disk UUIDs, MAC addresses, device serials | fingerprints the hardware |
-
-**Cleared by the user, do not re-flag:** monitor serial numbers (`VTN45266`,
-`VTN45265` in the sway pages). They are display-panel identifiers, not account or
-network identifiers, and the user has judged them harmless.
 | LAN addressing that is *this* network | maps the home network |
-| WiFi SSIDs, PSKs, carrier/ISP account details | locates the person |
+| WiFi SSIDs and PSKs | locates the person |
 | employer, client names, colleagues' names | not the author's to publish |
+
+**Cleared by the user, do not re-flag:**
+
+- Monitor serial numbers (`VTN45266`, `VTN45265` in the sway pages) — display-panel
+  identifiers, not account or network identifiers.
+- The mobile carrier name in `system/wwan.md`. The site's own `.ch` domain already
+  says as much about location as the carrier does.
 
 `audit.sh` derives the identity terms from the live machine (`hostname`, `$USER`,
 `git config user.name` / `user.email`), so an `IDENT` hit is never a coincidence —
@@ -53,9 +56,13 @@ Typical SKIP cases:
   the version list also advertises which unpatched software runs on the machine.
 - **Real network topology** — a page showing the actual LAN layout, static leases,
   or a reachable host.
-- **Personal circumstance** — `system/wwan.md` names the mobile carrier, which
-  narrows the country and the account. Judgement call: the *procedure* is
-  generic, but the page as written is not.
+- **Personal circumstance** — `system/java.md` names the Swiss cantonal tax
+  software the machine runs, which is a financial/administrative detail rather
+  than a technical one.
+- **A third party's name** — a client, employer or internal project appearing in
+  an example (a `services.AddCobaltServices()` call in a DI snippet). Not the
+  author's to publish. The fix is usually to strip the name in the dotfiles, not
+  to withhold the page.
 - **The author's own security posture in operational detail** — a page that
   describes how *this* machine is locked down specifically enough to plan around
   (exact LUKS slot layout with recovery specifics, backup repo locations plus
