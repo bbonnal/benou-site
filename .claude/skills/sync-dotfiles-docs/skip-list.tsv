@@ -1,0 +1,11 @@
+# Pages deliberately not published, with the reason. audit.sh reports these as
+# SKIPPED rather than MISSING, so a run's MISSING list only ever means "new work".
+#
+# Removing a line here does not publish the page — it just puts it back in the
+# review queue for the next sync. Fix the cause in the dotfiles instead when you
+# want a page online (rename the value, strip the name), then delete its line.
+#
+# <path under the dotfiles root>	<reason>
+doc/pages/system/installed-packages.md	real hostname (bbhost) plus the full 1499-package version inventory — fingerprints the machine
+doc/pages/system/java.md	names the Swiss cantonal tax software the machine runs — personal/financial circumstance
+doc/pages/system/arch-install.md	collision: the site already publishes a fuller hand-written arch-install guide at the same path

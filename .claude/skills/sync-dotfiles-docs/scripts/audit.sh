@@ -25,6 +25,7 @@ SITE="${SITE_DIR:-$HOME/Repos/benou-site}"
 PAGES_SUBDIR="doc/pages"
 CONTENT_SUBDIR="content/docs"
 PSEUDO="benou"                 # the ONE identifier allowed to appear online
+SKIP_LIST="$(dirname -- "$(readlink -f -- "$0")")/../skip-list.tsv"
 SCAN_ALL=0
 SEP=$'\x1f'                    # unit separator: cannot occur inside a regex spec
 
@@ -65,6 +66,17 @@ done
 for cmd in grep awk sha256sum git; do need "$cmd"; done
 [[ -d $DOTFILES/$PAGES_SUBDIR ]]  || die "no $PAGES_SUBDIR under $DOTFILES"
 [[ -d $SITE/$CONTENT_SUBDIR ]]    || die "no $CONTENT_SUBDIR under $SITE"
+
+# ---- deliberate skips -------------------------------------------------------
+# Pages already reviewed and decided against. Reporting them as MISSING every run
+# would bury the one thing MISSING should mean: something new to look at.
+declare -A SKIPPED_REASON=()
+if [[ -f $SKIP_LIST ]]; then
+    while IFS=$'\t' read -r path reason; do
+        [[ -z ${path:-} || $path == \#* ]] && continue
+        SKIPPED_REASON[$path]=${reason:-no reason recorded}
+    done < "$SKIP_LIST"
+fi
 
 # ---- identity terms, derived from THIS machine ------------------------------
 # Far more precise than guessing at names: we look for the real hostname, the
@@ -134,7 +146,7 @@ while IFS= read -r -d '' page; do
 done < <(find "$SITE/$CONTENT_SUBDIR" -name '*.md' -print0)
 
 # ---- inventory: what the dotfiles hold --------------------------------------
-declare -a MISSING=() STALE=() SYNCED=()
+declare -a MISSING=() STALE=() SYNCED=() SKIPPED=()
 declare -A SEEN_SRC=()
 
 while IFS= read -r -d '' src_file; do
@@ -143,7 +155,9 @@ while IFS= read -r -d '' src_file; do
     [[ $base == _* || $base == README.md ]] && continue
     SEEN_SRC[$rel]=1
     sha=$(short_sha "$src_file")
-    if [[ -z ${PUB_SHA[$rel]:-} ]]; then
+    if [[ -n ${SKIPPED_REASON[$rel]:-} ]]; then
+        SKIPPED+=("$rel${SEP}${SKIPPED_REASON[$rel]}")
+    elif [[ -z ${PUB_SHA[$rel]:-} ]]; then
         MISSING+=("$rel${SEP}$sha")
     elif [[ ${PUB_SHA[$rel]} != "$sha" ]]; then
         STALE+=("$rel${SEP}$sha${SEP}${PUB_SHA[$rel]}${SEP}${PUB_PATH[$rel]}")
@@ -179,6 +193,9 @@ done
 for e in "${SYNCED[@]:-}"; do
     [[ -n $e ]] && printf 'SYNCED     %-52s %s\n' "${e%%"$SEP"*}" "${e##*"$SEP"}"
 done
+for e in "${SKIPPED[@]:-}"; do
+    [[ -n $e ]] && printf 'SKIPPED    %-52s %s\n' "${e%%"$SEP"*}" "${e##*"$SEP"}"
+done
 for e in "${ORPHANED[@]:-}"; do
     [[ -n $e ]] && printf 'ORPHANED   %-52s %s (source gone)\n' "${e%%"$SEP"*}" "${e##*"$SEP"}"
 done
@@ -186,8 +203,9 @@ for e in "${UNTRACKED[@]:-}"; do
     [[ -n $e ]] && printf 'UNTRACKED  %s (hand-written, no source:)\n' "$e"
 done
 
-printf '\nmissing %d · stale %d · synced %d · orphaned %d · untracked %d\n' \
-    "${#MISSING[@]}" "${#STALE[@]}" "${#SYNCED[@]}" "${#ORPHANED[@]}" "${#UNTRACKED[@]}"
+printf '\nmissing %d · stale %d · synced %d · skipped %d · orphaned %d · untracked %d\n' \
+    "${#MISSING[@]}" "${#STALE[@]}" "${#SYNCED[@]}" "${#SKIPPED[@]}" \
+    "${#ORPHANED[@]}" "${#UNTRACKED[@]}"
 
 # ---- report: scan -----------------------------------------------------------
 # Only the pages a sync would actually push, unless --all.

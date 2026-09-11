@@ -18,11 +18,17 @@ happens before the push, and the user approves the publish list.
 .claude/skills/sync-dotfiles-docs/scripts/audit.sh
 ```
 
-Reports every source page as `MISSING` / `STALE` / `SYNCED`, plus `ORPHANED`
-(published, source deleted) and `UNTRACKED` (hand-written, never from dotfiles).
-Then pattern-scans the missing and stale ones for credentials, real identifiers,
-and machine details. `--all` rescans published pages too; `--dotfiles` / `--site`
-override the paths.
+Reports every source page as `MISSING` / `STALE` / `SYNCED` / `SKIPPED`, plus
+`ORPHANED` (published, source deleted) and `UNTRACKED` (hand-written, never from
+dotfiles). Then pattern-scans the missing and stale ones for credentials, real
+identifiers, and machine details. `--all` rescans published pages too;
+`--dotfiles` / `--site` override the paths.
+
+`SKIPPED` comes from `skip-list.tsv` next to this file: pages already reviewed and
+decided against, each with its reason. They are not scanned and not re-litigated,
+which is what keeps `MISSING` meaning "something new to look at" — so a routine run
+should report `missing 0`. Deleting a line there does not publish the page; it just
+returns it to the review queue.
 
 Read the inventory back to the user as a count and a shape ("31 system pages, 11
 docker, 8 shell…"), not as 75 lines of raw output.
@@ -35,7 +41,8 @@ Give every page one verdict:
 
 - **PUBLISH** — nothing identifies the person, the machine, or the network.
 - **SKIP** — carries something specific that should not be online. Leave it
-  unpublished and list it. Do not redact and publish.
+  unpublished, add a line to `skip-list.tsv` with the reason, and move on. Do not
+  redact the copy on the site and publish it anyway.
 - **BLOCK** — a real credential. Tell the user at once; a secret already in a git
   repo needs rotating, not just deleting.
 
@@ -44,15 +51,12 @@ Most scan hits are noise: `POSTGRES_PASSWORD=dev` in docker teaching material,
 question is never "does this look like a secret" but **"is this value real, and
 is it this person's?"**
 
-Known SKIP cases in the current dotfiles, as worked examples:
-
-- `system/installed-packages.md` — real hostname `bbhost` plus an exact
-  1499-package inventory. Fingerprints the machine and advertises its software
-  versions. Its `.txt` siblings skip with it.
-- `system/arch-install.md` — names the actual laptop (`Lenovo T14s`) and this
-  machine's disk layout. The site already publishes a fuller, hand-written
-  arch-install guide, so nothing is lost by skipping it.
-- `system/wwan.md` — names the mobile carrier, which narrows country and account.
+**When the page is fine but one value is not, fix the dotfiles instead.** That is
+the better outcome than a permanent skip: the carrier name in `system/wwan.md` and
+a `services.AddCobaltServices()` call in `dotnet/wpf-apphost.md` both ended up
+published this way — one cleared by the user, one stripped at the source and
+committed in `~/Dotfiles`. A skip is for when the *page* is the problem, not a
+line in it.
 
 ## 3. Handle collisions and untracked pages
 
@@ -62,21 +66,16 @@ existing `system/install-docker.md`). Never overwrite or silently duplicate one:
 report the pair and let the user choose which wins. Hand-written pages carry no
 `source:` field, which is exactly how `audit.sh` tells them apart — preserve that.
 
-**First run only — folding `vim/` and `tmux/` into `tools/`.** The site has
-hand-written `vim/shortcuts.md`, `vim/learnings.md` and `tmux/shortcuts.md` that
-overlap the dotfiles `tools/nvim.md` and `tools/tmux.md`. One topic should have
-one home, and that home is the dotfiles:
+**Already done — the `vim/` and `tmux/` fold-in.** Those sections were removed on
+the first sync; their hand-written pages now live at `tools/vim-shortcuts.md`,
+`tools/vim-learnings.md` and `tools/tmux-shortcuts.md`, alongside the mirrored
+`tools/nvim.md` and `tools/tmux.md`. They carry no `source:` field on purpose.
+Do not recreate `vim/` or `tmux/`.
 
-1. Propose merging the hand-written content **into the dotfiles source pages**,
-   showing the user the exact diff first.
-2. On approval, commit that in `~/Dotfiles` — it is their repo, so it gets its own
-   commit and its own mention in the report.
-3. Mirror the merged pages to `content/docs/tools/`, and `git rm` the now-empty
-   `content/docs/vim/` and `content/docs/tmux/` sections.
-
-If the user declines the merge, move the hand-written pages to
-`content/docs/tools/vim-shortcuts.md` etc. without a `source:` field, so they stay
-visibly hand-written and the mirror stays 1:1.
+Still open, if the user ever wants it: merging that hand-written content **into the
+dotfiles source pages** so each topic has exactly one source of truth. That edits a
+second repo, so show the diff and get approval first, and give it its own commit in
+`~/Dotfiles`.
 
 ## 4. Get approval before writing anything
 
@@ -109,6 +108,10 @@ Scaffolding first, so article commits stay pure:
 ```bash
 git add content/docs/*/_index.md && git commit -m "Add section indexes for dotfiles mirror"
 ```
+
+Check `git diff --cached --stat` before each commit. A `git mv` or `git rm` from an
+earlier step is *already staged*, and a later `git add` will sweep it into the wrong
+commit — which breaks the one-article-one-commit property the whole scheme rests on.
 
 Then one commit per article, containing only that article (and its bundle assets):
 
