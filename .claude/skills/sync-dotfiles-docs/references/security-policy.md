@@ -16,6 +16,10 @@ that ties a page to the real person or the real machine is not:
 | `bbonnal` (git handle) | links the docs to the real account |
 | `benjamin`, `bonnal`, real email | the actual identity |
 | real filesystem/disk UUIDs, MAC addresses, device serials | fingerprints the hardware |
+
+**Cleared by the user, do not re-flag:** monitor serial numbers (`VTN45266`,
+`VTN45265` in the sway pages). They are display-panel identifiers, not account or
+network identifiers, and the user has judged them harmless.
 | LAN addressing that is *this* network | maps the home network |
 | WiFi SSIDs, PSKs, carrier/ISP account details | locates the person |
 | employer, client names, colleagues' names | not the author's to publish |
