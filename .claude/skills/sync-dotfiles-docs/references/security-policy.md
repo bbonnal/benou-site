@@ -26,6 +26,9 @@ that ties a page to the real person or the real machine is not:
   identifiers, not account or network identifiers.
 - The mobile carrier name in `system/wwan.md`. The site's own `.ch` domain already
   says as much about location as the carrier does.
+- The laptop's model/SKU code (`21M1000PMZ` in `system/suspend-resume.md`). It
+  names a configuration that thousands of units share, not a single machine —
+  unlike a unit serial, which stays on the never-online list.
 
 `audit.sh` derives the identity terms from the live machine (`hostname`, `$USER`,
 `git config user.name` / `user.email`), so an `IDENT` hit is never a coincidence —
@@ -56,9 +59,10 @@ Typical SKIP cases:
   the version list also advertises which unpatched software runs on the machine.
 - **Real network topology** — a page showing the actual LAN layout, static leases,
   or a reachable host.
-- **Personal circumstance** — `system/java.md` names the Swiss cantonal tax
-  software the machine runs, which is a financial/administrative detail rather
-  than a technical one.
+- **Personal circumstance** — what the machine is *used for*, where that is
+  financial, medical or administrative rather than technical. `system/java.md`
+  once named the tax software behind its workaround; the workaround itself is
+  generic, so the name was stripped in the dotfiles and the page publishes.
 - **A third party's name** — a client, employer or internal project appearing in
   an example (a `services.AddCobaltServices()` call in a DI snippet). Not the
   author's to publish. The fix is usually to strip the name in the dotfiles, not

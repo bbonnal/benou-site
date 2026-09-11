@@ -7,5 +7,4 @@
 #
 # <path under the dotfiles root>	<reason>
 doc/pages/system/installed-packages.md	real hostname (bbhost) plus the full 1499-package version inventory — fingerprints the machine
-doc/pages/system/java.md	names the Swiss cantonal tax software the machine runs — personal/financial circumstance
 doc/pages/system/arch-install.md	collision: the site already publishes a fuller hand-written arch-install guide at the same path
