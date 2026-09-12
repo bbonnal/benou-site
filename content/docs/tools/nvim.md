@@ -1,13 +1,40 @@
 ---
 title: "Neovim"
-date: 2026-08-02
+date: 2026-09-12
 tags: ["tools", "neovim", "editor"]
 source: doc/pages/tools/nvim.md
-source_sha: f84c18863d90
+source_sha: 9d15e6fc32db
 ---
 
-> Neovim keybindings. Leader is Space. Config: one file per concern in
+> Neovim keybindings and recipes. Leader is Space. Config: one file per concern in
 > `.config/nvim/lua/{config,plugins}/` — see `doc/nvim/README.md`.
+
+## Vim basics
+
+Vim's own motions and operators, not this config's — they work anywhere vim
+bindings do.
+
+### Motion
+
+- Left / down / up / right: `h` `j` `k` `l`
+- Start of next / previous word: `w` / `b`
+- Start / end of line: `0` / `$`
+- Start / end of file: `gg` / `G`
+
+### Editing
+
+- Insert before / after the cursor: `i` / `a`
+- Delete line: `dd`
+- Yank line: `yy`
+- Paste after the cursor: `p`
+- Undo / redo: `u` / `Ctrl+r`
+
+### Files
+
+- Save: `:w` (this config also maps `<leader>w`)
+- Quit: `:q`
+- Save and quit: `:wq`
+- Quit without saving: `:q!`
 
 ## General
 
@@ -100,6 +127,65 @@ Workflow, docker attach, launch.json: see `nvim-debugging`.
 - Surround add inner word with parenthesis: `saiw)`
 - Surround delete quotes: `sd'`
 - Surround replace parenthesis with quotes: `sr)'`
+
+## Recipes
+
+Filtering through shell commands: `:read !cmd` inserts a command's output below the
+cursor, and `:'<,'>!cmd` replaces the selected lines with whatever the command makes
+of them.
+
+### Insert the date
+
+- Full: `:read !date` → `Sun Dec 21 01:24:39 PM CET 2025`
+- Date only: `:read !date +\%F` → `2025-12-21`
+- Date and time: `:read !date +\%F\ \%T` → `2025-12-21 13:35:47`
+
+`%` means "the current filename" inside `:!`, so every `%` in the format string has
+to be escaped as `\%`.
+
+### Number a list
+
+Select the lines, then filter them through `nl`:
+
+```
+:'<,'>!nl -w1 -s.
+
+ First item           1. First item
+ Second item    →    2. Second item
+ Third item           3. Third item
+```
+
+`-w1` is the number width, `-s.` the separator after it. The leading space on each
+input line is what puts a space after the dot.
+
+### Count lines, words and characters across files
+
+```
+:read !wc -l -w -m ~/Repos/benou-site/content/docs/tools/* | sort -n
+```
+
+`sort -n` puts the biggest last; `wc` prints a warning line for any directory in the
+glob, which you delete along with the rest once you are done reading it.
+
+### Find and replace in a selection
+
+```
+:'<,'>s/kangaroo/koala/gIc
+```
+
+- `g` — every match on a line, not just the first
+- `I` — case-sensitive, whatever `ignorecase` is set to
+- `c` — confirm each replacement
+
+Because of `I`, a capitalised `Kangaroo` is left alone and needs a second pass.
+
+Manual alternative, good when the matches want different treatment: `ciw` the first
+one, then move to the next match and repeat with `.`.
+
+### Search for the text you just yanked
+
+Yank it, press `/`, then `Ctrl+r` `"` to paste the unnamed register into the search
+prompt. Walk the matches with `n` and `N`.
 
 ## Maintenance
 
