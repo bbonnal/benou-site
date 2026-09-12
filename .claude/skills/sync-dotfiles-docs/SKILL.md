@@ -139,14 +139,38 @@ One push, not one per article — `.github/workflows` deploys on every push to
 commits stay individually revertable either way, which is what granularity was
 for.
 
-## 7. Report
+Watch the run **for the commit you just pushed**, not "the latest run" —
+`gh run list --limit 1` immediately after a push often still returns the previous
+one and reports a success that is not yours:
+
+```bash
+gh run list --limit 5 --json headSha,databaseId,status \
+  -q ".[] | select(.headSha == \"$(git rev-parse HEAD)\") | .databaseId"
+```
+
+## 7. Removing an article is not finished by a revert
+
+**The deploy does not delete.** `.github/workflows` mirrors `public/` to OVH with
+`lftp mirror -R --verbose` and no `--delete`, so a file removed from the repo stays
+on the server and its URL keeps serving the old page. A `git revert` takes the
+article out of the repo, the home page and the search index — and leaves it
+publicly reachable at its own URL.
+
+So when an article has to come down for a *security* reason, a revert is not enough
+on its own. Either add `--delete` to the lftp `options:` (which also makes every
+future removal work, but will delete anything else living under the remote
+`/home/benousf/docs/` — confirm with the user what is there before suggesting it),
+or have the user remove the file over SFTP.
+
+## 8. Report
 
 Tell the user:
 
 - what was published, by section, with the commit count
 - what was skipped and why — one line each, so the list is easy to argue with
 - anything blocked, and that it needs rotating
-- that removing a single article is `git revert <sha> && git push`
+- that removing a single article is `git revert <sha> && git push`, plus the
+  server-side caveat above if anything was retired
 
-Re-run `audit.sh` after the push: everything published should now read `SYNCED`,
-and the remainder should be exactly the skip list.
+Re-run `audit.sh` after the push: it should read `missing 0 · stale 0`, with the
+remainder exactly the skip list.
